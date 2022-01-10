@@ -8,7 +8,6 @@
 
     <div class="row" >
         <div class="col-8">
-
             <div class="card mb-3" >
                 <div class="row g-0">
                     <div class="col-md-4">
@@ -27,7 +26,6 @@
         </div>
 
         <div class="col-4">
-
             <div class="card mb-3">
                 <img src="https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/portrait-of-smiling-redhead-woman-leaning-on-railing-at-sunset-cavan-images.jpg" class="card-img-top img-fluid rounded-start" alt="...">
                 <div class="card-body">
@@ -35,13 +33,17 @@
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                 </div>
             </div>
-
-            <div class="card profile-card">
-                <img class="profile-picture" src="https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/portrait-of-smiling-redhead-woman-leaning-on-railing-at-sunset-cavan-images.jpg" alt="Avatar">
-                    <div class="container">
-                        <h4><b>John Doe</b></h4> 
-                        <p>Architect & Engineer</p> 
-                    </div>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Newsletter</h5>
+                    <form>
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                            <small id="emailHelp" class="form-text text-muted">Vi skal aldri dele e-mailen din med noen andre.</small>
+                            @Html.ActionLink("Sign Up", "Create", "Travel", null, new { @class = "btn btn-primary btn-large" })
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

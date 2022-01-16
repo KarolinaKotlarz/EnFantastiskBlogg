@@ -1,13 +1,14 @@
-﻿@{
+﻿@model List<Post>
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="" style="padding: 0% 5% 0% 5%">
+<div class="">
 
     <h1 class="text-center">Hei, du!</h1>
 
     <div class="row" >
-        <div class="col-8">
+        <div class="col-9">
             <div class="card mb-3" >
                 <div class="row g-0">
                     <div class="col-md-4">
@@ -25,7 +26,7 @@
 
         </div>
 
-        <div class="col-4">
+        <div class="col-3">
             <div class="card mb-3">
                 <img src="https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/portrait-of-smiling-redhead-woman-leaning-on-railing-at-sunset-cavan-images.jpg" class="card-img-top img-fluid rounded-start" alt="...">
                 <div class="card-body">
@@ -40,7 +41,9 @@
                         <div class="form-group">
                             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
                             <small id="emailHelp" class="form-text text-muted">Vi skal aldri dele e-mailen din med noen andre.</small>
-                            @Html.ActionLink("Sign Up", "Create", "Travel", null, new { @class = "btn btn-primary btn-large" })
+                            <div class="form-group">
+                                <input type="submit" value="Sign Up" class="btn btn-primary" />
+                            </div>
                         </div>
                     </form>
                 </div>

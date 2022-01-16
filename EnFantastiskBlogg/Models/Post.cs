@@ -11,8 +11,8 @@ namespace EnFantastiskBlogg.Models
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
         public string Body { get; set; }
-        public List<Post> Posts { get; set;}
-        public IdentityUser User { get; set; }
-        public int UserId { get; set; }
+        public List<Comment> Comments { get; set;}
+        public ApplicationUser User { get; set; }
+        public string UserId { get; set; }
     }
 }

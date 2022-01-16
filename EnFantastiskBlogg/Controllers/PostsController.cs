@@ -8,16 +8,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EnFantastiskBlogg.Data;
 using EnFantastiskBlogg.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace EnFantastiskBlogg.Controllers
 {
+    [Authorize]
     public class PostsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public PostsController(ApplicationDbContext context)
+        public PostsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Posts
@@ -57,9 +62,17 @@ namespace EnFantastiskBlogg.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PostId,Title,CreatedDate,UpdatedDate,Body,UserId")] Post post)
         {
+            var user = await _userManager.GetUserAsync(User);
+
             if (ModelState.IsValid)
             {
+                post.UserId = user.Id;
+                post.CreatedDate = DateTime.UtcNow;
+                post.UpdatedDate = DateTime.UtcNow;
                 _context.Add(post);
+
+                user.PostCount++;
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -87,7 +100,7 @@ namespace EnFantastiskBlogg.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PostId,Title,CreatedDate,UpdatedDate,Body,UserId")] Post post)
+        public async Task<IActionResult> Edit(int id, [Bind("PostId,Title,Body")] Post post)
         {
             if (id != post.PostId)
             {
@@ -96,9 +109,15 @@ namespace EnFantastiskBlogg.Controllers
 
             if (ModelState.IsValid)
             {
+                var _post = await _context.Posts.FirstOrDefaultAsync(x => x.PostId == id);
+
+                _post.Title = post.Title;
+                _post.UpdatedDate = DateTime.UtcNow;
+                _post.Body = post.Body;
+
                 try
                 {
-                    _context.Update(post);
+                    _context.Update(_post);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

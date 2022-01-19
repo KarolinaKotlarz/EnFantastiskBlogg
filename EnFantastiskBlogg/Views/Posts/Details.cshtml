@@ -1,48 +1,105 @@
-﻿@model EnFantastiskBlogg.Models.Post
+﻿@model EnFantastiskBlogg.Models.Comment
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Post";
 }
 
-<h1>Details</h1>
+<div class="">
+    <div class="row" >
+        <div class="col-9">
+            
 
-<div>
-    <h4>Post</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UpdatedDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UpdatedDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Body)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Body)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UserId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UserId)
-        </dd>
-    </dl>
+            <div class="card mb-3" style="overflow: hidden">
+                <div style="height: 30vh; overflow: hidden">
+                    <img style="margin: 0 0 0 0" src="https://www.treehugger.com/thmb/QolJfOYFmxwIH6Sxv5SBqY8Kq-M=/1885x1414/smart/filters:no_upscale()/GettyImages-1273584292-cbcd5f85f4c646d58f7a7fa158dcaaeb.jpg" class="card-img-top img-fluid rounded-start" alt="...">
+                </div>
+
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+
+            
+            <div class="card mb-3" >
+                <div class="row g-0">
+                    <div class="col-md-8">
+                        <div class="card-body card-body">
+                            <h5 class="card-title">Kommentere</h5>
+
+                            <form asp-action="Create">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group">
+                                    <label asp-for="PostId" class="control-label"></label>
+                                    <select asp-for="PostId" class ="form-control" asp-items="ViewBag.PostId"></select>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Title" class="control-label"></label>
+                                    <input asp-for="Title" class="form-control" />
+                                    <span asp-validation-for="Title" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Body" class="control-label"></label>
+                                    <input asp-for="Body" class="form-control" />
+                                    <span asp-validation-for="Body" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="CreatedDate" class="control-label"></label>
+                                    <input asp-for="CreatedDate" class="form-control" />
+                                    <span asp-validation-for="CreatedDate" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="UserId" class="control-label"></label>
+                                    <input asp-for="UserId" class="form-control" />
+                                    <span asp-validation-for="UserId" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Create" class="btn btn-primary" />
+                                </div>
+                            </form>
+                            
+                                <div class="card mb-3" >
+                                    <div class="row g-0">
+                                        <div class="col-md-8">
+                                            <div class="card-body card-body">
+                                                <h5 class="card-title">Kommentere</h5>
+                                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-3">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Newsletter</h5>
+                    <form>
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.PostId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

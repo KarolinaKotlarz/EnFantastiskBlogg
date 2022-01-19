@@ -1,5 +1,6 @@
 ﻿using EnFantastiskBlogg.Data;
 using EnFantastiskBlogg.Models;
+using EnFantastiskBlogg.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -19,22 +20,14 @@ namespace EnFantastiskBlogg.Controllers
 
         public async Task<IActionResult> Index()
         {
-            /*
             var vm = new HomeViewModel
             {
-                Comments = await _context.Comment.
-                                            OrderByDescending(x => x.CreatedDate).
-                                            ToListAsync()
+                Posts = await  _context.Posts.OrderBy(x => x.CreatedDate).ToListAsync<Post>()
             };
             return View(vm);
 
-            var posts await _ctxt.post.include(x = x.user).orderby(x = => x.date).tolist
-return view(posts)
-
-
-            */
-            var posts = await _context.Posts.OrderBy(x => x.CreatedDate).ToListAsync<Post>();
-            return View(posts);
+            //var posts = await _context.Posts.OrderBy(x => x.CreatedDate).ToListAsync<Post>();
+            //return View(posts);
         }
 
         public IActionResult Privacy()

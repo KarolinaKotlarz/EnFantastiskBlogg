@@ -10,6 +10,7 @@ using EnFantastiskBlogg.Data;
 using EnFantastiskBlogg.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using EnFantastiskBlogg.Models.ViewModels;
 
 namespace EnFantastiskBlogg.Controllers
 {
@@ -107,7 +108,7 @@ namespace EnFantastiskBlogg.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (true)
             {
                 var _post = await _context.Posts.FirstOrDefaultAsync(x => x.PostId == id);
 
@@ -168,6 +169,47 @@ namespace EnFantastiskBlogg.Controllers
         private bool PostExists(int id)
         {
             return _context.Posts.Any(e => e.PostId == id);
+        }
+
+        public async Task<IActionResult> AddPost(Post model)
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            Post post = new Post
+            {
+                Title = model.Title ?? "",
+                Body = model.Body ?? "",
+                User = user,
+                UserId = user.Id,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now
+            };
+
+            _context.Posts.Add(post);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
+        public async Task<IActionResult> AddComment(int id, Post model)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var _post = await _context.Posts.FirstOrDefaultAsync(x => x.PostId == id);
+
+            Comment comment = new Comment
+            {
+                Title = model.Title ?? "",
+                Body = model.Body ?? "",
+                Post = _post,
+                PostId = _post.PostId,
+                User = user,
+                UserId = user.Id,
+                CreatedDate = DateTime.Now
+            };
+
+            _context.Comments.Add(comment);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
         }
     }
 }

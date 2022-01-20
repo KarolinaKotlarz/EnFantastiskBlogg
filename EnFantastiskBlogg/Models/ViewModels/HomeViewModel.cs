@@ -2,6 +2,7 @@
 {
     public class HomeViewModel
     {
-        public List<PostViewModel> Posts { get; set; }
+        public List<Post> Posts { get; set; }
+        public Post Post { get; set; }
     }
 }

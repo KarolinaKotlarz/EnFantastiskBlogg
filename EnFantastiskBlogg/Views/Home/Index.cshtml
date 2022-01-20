@@ -1,4 +1,5 @@
-﻿@model List<Post>
+﻿@model EnFantastiskBlogg.Models.ViewModels.HomeViewModel
+
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -9,7 +10,7 @@
 
     <div class="row" >
         <div class="col-9">
-            @foreach (var post in Model)
+            @foreach (var post in Model.Posts)
             {
                 <div class="card mb-3" >
                 <div class="row g-0">
@@ -21,6 +22,7 @@
                             <h5 class="card-title">@post.Title</h5>
                             <p class="card-text">@post.Body</p>
                             <p class="card-text"><small class="text-muted">Last updated on @post.UpdatedDate</small></p>
+                            <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.PostId">Details</a> |
                         </div>
                     </div>
                 </div>

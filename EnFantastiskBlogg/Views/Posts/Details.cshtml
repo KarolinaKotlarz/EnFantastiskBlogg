@@ -1,4 +1,4 @@
-﻿@model EnFantastiskBlogg.Models.Comment
+﻿@model EnFantastiskBlogg.Models.Post
 
 @{
     ViewData["Title"] = "Post";
@@ -15,8 +15,10 @@
                 </div>
 
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <h5 class="card-title">
+                        @Html.DisplayNameFor(model => model.Title)
+                        </h5>
+                    <p class="card-text">Body</p>
                 </div>
             </div>
 
@@ -27,12 +29,8 @@
                         <div class="card-body card-body">
                             <h5 class="card-title">Kommentere</h5>
 
-                            <form asp-action="Create">
+                            <form asp-action="AddComment">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <div class="form-group">
-                                    <label asp-for="PostId" class="control-label"></label>
-                                    <select asp-for="PostId" class ="form-control" asp-items="ViewBag.PostId"></select>
-                                </div>
                                 <div class="form-group">
                                     <label asp-for="Title" class="control-label"></label>
                                     <input asp-for="Title" class="form-control" />
@@ -42,16 +40,6 @@
                                     <label asp-for="Body" class="control-label"></label>
                                     <input asp-for="Body" class="form-control" />
                                     <span asp-validation-for="Body" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="CreatedDate" class="control-label"></label>
-                                    <input asp-for="CreatedDate" class="form-control" />
-                                    <span asp-validation-for="CreatedDate" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="UserId" class="control-label"></label>
-                                    <input asp-for="UserId" class="form-control" />
-                                    <span asp-validation-for="UserId" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Create" class="btn btn-primary" />
@@ -98,6 +86,49 @@
         </div>
     </div>
 
+</div>
+
+<h1>Details</h1>
+
+<div>
+    <h4>Post</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UpdatedDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UpdatedDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Body)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Body)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UserId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UserId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.PostId">Edit</a> |
+    <a asp-controller="Home" asp-action="Index">Return to Home</a>
 </div>
 
 @section Scripts {

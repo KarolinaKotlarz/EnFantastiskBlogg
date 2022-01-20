@@ -8,8 +8,13 @@ html {
   }
 }
 
-p {
+/*p {
     font-family: "Times New Roman", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}*/
+
+.post-details {
+    font-size: .875em;
+    color: #6c757d !important;
 }
 
 html {

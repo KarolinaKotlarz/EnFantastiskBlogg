@@ -33,6 +33,7 @@ namespace EnFantastiskBlogg.Controllers
         }
 
         // GET: Posts/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -89,10 +90,18 @@ namespace EnFantastiskBlogg.Controllers
             }
 
             var post = await _context.Posts.FindAsync(id);
+            var user = await _userManager.GetUserAsync(User);
+
             if (post == null)
             {
                 return NotFound();
             }
+
+            if(user.Id != post.UserId)
+            {
+                return Forbid();
+            }
+
             return View(post);
         }
 
@@ -113,7 +122,7 @@ namespace EnFantastiskBlogg.Controllers
                 var _post = await _context.Posts.FirstOrDefaultAsync(x => x.PostId == id);
 
                 _post.Title = post.Title;
-                _post.UpdatedDate = DateTime.UtcNow;
+                _post.UpdatedDate = DateTime.Now;
                 _post.Body = post.Body;
 
                 try
@@ -171,42 +180,55 @@ namespace EnFantastiskBlogg.Controllers
             return _context.Posts.Any(e => e.PostId == id);
         }
 
-        public async Task<IActionResult> AddPost(Post model)
+        public async Task<IActionResult> AddPost(Post post)
         {
             var user = await _userManager.GetUserAsync(User);
 
-            Post post = new Post
+            Post p = new Post
             {
-                Title = model.Title ?? "",
-                Body = model.Body ?? "",
+                Title = post.Title ?? "",
+                Body = post.Body ?? "",
                 User = user,
                 UserId = user.Id,
                 CreatedDate = DateTime.Now,
-                UpdatedDate = DateTime.Now
+                UpdatedDate = DateTime.Now,
+                Comments = new List<Comment>()
             };
 
-            _context.Posts.Add(post);
+            _context.Posts.Add(p);
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index");
         }
-        public async Task<IActionResult> AddComment(int id, Post model)
+        public async Task<IActionResult> AddComment(Comment comment)
         {
             var user = await _userManager.GetUserAsync(User);
-            var _post = await _context.Posts.FirstOrDefaultAsync(x => x.PostId == id);
+            var post = await _context.Posts.FirstOrDefaultAsync(x => x.PostId == comment.PostId);
 
-            Comment comment = new Comment
+            Comment c = new Comment
             {
-                Title = model.Title ?? "",
-                Body = model.Body ?? "",
-                Post = _post,
-                PostId = _post.PostId,
+                Title = comment.Title ?? "",
+                Body = comment.Body ?? "",
+                Post = post,
+                PostId = post.PostId,
                 User = user,
                 UserId = user.Id,
                 CreatedDate = DateTime.Now
             };
 
-            _context.Comments.Add(comment);
+            if(post.Comments == null)
+            {
+                post.Comments = new List<Comment>();
+                post.Comments.Add(c);
+            }
+            else
+            {
+                post.Comments.Add(c);
+            }
+
+            _context.Update(post);
+            _context.Comments.Add(c);
+            
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index");

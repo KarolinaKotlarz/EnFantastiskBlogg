@@ -8,16 +8,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EnFantastiskBlogg.Data;
 using EnFantastiskBlogg.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace EnFantastiskBlogg.Controllers
 {
     public class CommentsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public CommentsController(ApplicationDbContext context)
+        public CommentsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Comments
@@ -60,14 +63,28 @@ namespace EnFantastiskBlogg.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CommentId,PostId,Title,Body,CreatedDate,UserId")] Comment comment)
         {
-            if (ModelState.IsValid)
+            if (true)
             {
-                _context.Add(comment);
+                var user = await _userManager.GetUserAsync(User);
+                var post = await _context.Posts.FirstOrDefaultAsync(x => x.PostId == comment.PostId);
+
+                Comment c = new Comment
+                {
+                    Title = comment.Title ?? "",
+                    Body = comment.Body ?? "",
+                    Post = post,
+                    PostId = post.PostId,
+                    User = user,
+                    UserId = user.Id,
+                    CreatedDate = DateTime.Now
+                };
+
+                _context.Add(c);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PostId"] = new SelectList(_context.Posts, "PostId", "PostId", comment.PostId);
-            return View(comment);
+            //ViewData["PostId"] = new SelectList(_context.Posts, "PostId", "PostId", comment.PostId);
+            //return View(comment);
         }
 
         // GET: Comments/Edit/5

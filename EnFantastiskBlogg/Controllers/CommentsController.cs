@@ -66,6 +66,12 @@ namespace EnFantastiskBlogg.Controllers
             if (true)
             {
                 var user = await _userManager.GetUserAsync(User);
+
+                if(user == null)
+                {
+                    user = new ApplicationUser { UserName = "Anonymous", Email = "Anonymous" };
+                }
+
                 var post = await _context.Posts.FirstOrDefaultAsync(x => x.PostId == comment.PostId);
 
                 Comment c = new Comment

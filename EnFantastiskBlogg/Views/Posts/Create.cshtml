@@ -4,33 +4,42 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Write your post...</h1>
 
-<h4>Post</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="AddPost">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+<div class="row" >
+        <div class="col">
+
+            <div class="card mb-3" style="overflow: hidden">
+                <div style="height: 30vh; overflow: hidden">
+                    <img style="margin: 0 0 0 0" src="https://www.treehugger.com/thmb/QolJfOYFmxwIH6Sxv5SBqY8Kq-M=/1885x1414/smart/filters:no_upscale()/GettyImages-1273584292-cbcd5f85f4c646d58f7a7fa158dcaaeb.jpg" class="card-img-top img-fluid rounded-start" alt="...">
+                </div>
+                <div class="card-body">
+                    <form asp-action="AddPost">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <h5 class="card-title">
+                            <div class="form-group">
+                                <input asp-for="Title" class="form-control" placeholder="A fantastic, attention-grabbing title..." />
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+                        </h5>
+                        <p class="card-text">
+                            <div class="form-group">
+                                <input asp-for="Body" class="form-control" placeholder="Your post..." />
+                                <span asp-validation-for="Body" class="text-danger"></span>
+                            </div>
+                        </p>
+                        <div class="form-group">
+                            <input type="submit" value="Post!" class="btn btn-primary" />
+                        </div>
+                     </form>
+                    <hr />
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Body" class="control-label"></label>
-                <input asp-for="Body" class="form-control" />
-                <span asp-validation-for="Body" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Home" asp-action="Index">Back to Home</a>
 </div>
 
 @section Scripts {

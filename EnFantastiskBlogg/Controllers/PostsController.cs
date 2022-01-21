@@ -41,7 +41,7 @@ namespace EnFantastiskBlogg.Controllers
                 return NotFound();
             }
 
-            var post = await _context.Posts.Include(x => x.Comments)
+            var post = await _context.Posts.Include(x => x.Comments).Include(x => x.User)
                 .FirstOrDefaultAsync(m => m.PostId == id);
             if (post == null)
             {
@@ -76,9 +76,9 @@ namespace EnFantastiskBlogg.Controllers
                 user.PostCount++;
 
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Posts", new { id = post.PostId });
             }
-            return View(post);
+            return RedirectToAction("Create");
         }
 
         // GET: Posts/Edit/5
@@ -191,14 +191,13 @@ namespace EnFantastiskBlogg.Controllers
                 User = user,
                 UserId = user.Id,
                 CreatedDate = DateTime.Now,
-                UpdatedDate = DateTime.Now,
-                Comments = new List<Comment>()
+                UpdatedDate = DateTime.Now
             };
 
             _context.Posts.Add(p);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", new { id = p.PostId });
         }
         public async Task<IActionResult> AddComment(Comment comment)
         {

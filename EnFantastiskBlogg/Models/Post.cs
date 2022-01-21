@@ -7,9 +7,11 @@ namespace EnFantastiskBlogg.Models
     {
         [Key]
         public int PostId { get; set; }
+        [Required]
         public string Title { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
+        [Required]
         public string Body { get; set; }
         public List<Comment> Comments { get; set;} = new List<Comment>();
         public ApplicationUser User { get; set; }

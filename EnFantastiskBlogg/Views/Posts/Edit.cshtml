@@ -20,15 +20,13 @@
                         <input type="hidden" asp-for="PostId" />
                         <h5 class="card-title">
                             <div class="form-group">
-                                <label asp-for="Title" class="control-label"></label>
-                                <input asp-for="Title" class="form-control" />
+                                <input asp-for="Title" class="form-control" placeholder="A fantastic, attention-grabbing title..."/>
                                 <span asp-validation-for="Title" class="text-danger"></span>
                             </div>
                         </h5>
                         <p class="card-text">
                             <div class="form-group">
-                                <label asp-for="Body" class="control-label"></label>
-                                <input asp-for="Body" class="form-control" />
+                                <input asp-for="Body" class="form-control" placeholder="Your post..." />
                                 <span asp-validation-for="Body" class="text-danger"></span>
                             </div>
                         </p>

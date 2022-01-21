@@ -41,7 +41,7 @@ namespace EnFantastiskBlogg.Controllers
                 return NotFound();
             }
 
-            var post = await _context.Posts
+            var post = await _context.Posts.Include(x => x.Comments)
                 .FirstOrDefaultAsync(m => m.PostId == id);
             if (post == null)
             {
@@ -141,9 +141,9 @@ namespace EnFantastiskBlogg.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", new { id = post.PostId });
             }
-            return View(post);
         }
 
         // GET: Posts/Delete/5

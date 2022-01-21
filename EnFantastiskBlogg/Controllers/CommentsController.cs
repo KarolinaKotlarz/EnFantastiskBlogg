@@ -81,10 +81,8 @@ namespace EnFantastiskBlogg.Controllers
 
                 _context.Add(c);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Posts", new { id = c.Post.PostId });
             }
-            //ViewData["PostId"] = new SelectList(_context.Posts, "PostId", "PostId", comment.PostId);
-            //return View(comment);
         }
 
         // GET: Comments/Edit/5

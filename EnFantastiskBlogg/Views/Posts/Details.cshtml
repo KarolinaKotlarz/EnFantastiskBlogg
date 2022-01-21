@@ -6,7 +6,7 @@
 
 <div class="">
     <div class="row" >
-        <div class="col">
+        <div class="col-9">
 
             <div class="card mb-3" style="overflow: hidden">
                 <div style="height: 30vh; overflow: hidden">
@@ -45,17 +45,15 @@
                 <div class="row g-0">
                     <div class="col-md-8">
                         <div class="card-body card-body">
-                            <h5 class="card-title">Kommentere</h5>
+                            <h5 class="card-title">Write a Comment</h5>
 
                             <form asp-controller="Comments" asp-action="Create">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <div class="form-group">
-                                    <label asp-for="Title" class="control-label"></label>
-                                    <input asp-for="Title" class="form-control" />
+                                    <input asp-for="Title" class="form-control" placeholder="Interesting title..." />
                                     <span asp-validation-for="Title" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label asp-for="Body" class="control-label"></label>
                                     <input asp-for="Body" class="form-control" />
                                     <span asp-validation-for="Body" class="text-danger"></span>
                                 </div>
@@ -66,34 +64,45 @@
                                     <input type="submit" value="Create" class="btn btn-primary" />
                                 </div>
                             </form>
-                            
-                                <div class="card mb-3" >
-                                    <div class="row g-0">
-                                        <div class="col-md-8">
-                                            <div class="card-body card-body">
-                                                <h5 class="card-title">Kommentere</h5>
-                                                
-                                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
                         </div>
                     </div>
                 </div>
             </div>
+            @foreach(var comment in Model.Comments)
+            {
+                <div class="card mb-3" >
+                    <div class="row g-0">
+                        <div class="col-md-8">
+                            <div class="card-body card-body">
+                                <h5 class="card-title">Kommentere</h5>
+                                <p class="card-text">@comment.Title</p>
+                                <p class="card-text">@comment.Body</p>
+                                <p class="card-text">
+                                    <small class="text-muted">
+                                        Last updated 3 mins ago
+                                    </small>
+                                </p>               
+                                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            }
+            
 
         </div>
-        @*
-        <div class="col-3">
+        
+        @*<div class="col-3">
+            @foreach(var comment in Model.Comments)
+            {
             <div class="card mb-3">
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                 </div>
             </div>
+            }
             <div class="card mb-3">
                 <div class="card-body">
                     <h5 class="card-title">Newsletter</h5>
@@ -105,8 +114,8 @@
                     </form>
                 </div>
             </div>
-        </div>
-        *@
+        </div>*@
+        
     </div>
 </div>
 

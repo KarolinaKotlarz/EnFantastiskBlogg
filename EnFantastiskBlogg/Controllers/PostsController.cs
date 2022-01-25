@@ -48,7 +48,17 @@ namespace EnFantastiskBlogg.Controllers
                 return NotFound();
             }
 
-            return View(post);
+            PostDetailsViewModel p = new PostDetailsViewModel
+            {
+                PostId = post.PostId,
+                Post = post,
+                Comment = new CreateCommentViewModel()
+                {
+                    PostId = post.PostId
+                }
+            };
+
+            return View(p);
         }
 
         // GET: Posts/Create

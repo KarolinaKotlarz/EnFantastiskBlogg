@@ -1,4 +1,4 @@
-﻿@model EnFantastiskBlogg.Models.Post
+﻿@model EnFantastiskBlogg.Models.ViewModels.PostDetailsViewModel
 
 @{
     ViewData["Title"] = "Post";
@@ -16,27 +16,27 @@
 
                 <div class="card-body">
                     <h5 class="card-title">
-                        @Html.DisplayFor(model => model.Title)
+                        @Html.DisplayFor(model => model.Post.Title)
                     </h5>
                     <div class="col">
                         <div class="row">
                             <small class="post-details">
-                                Author: @Html.DisplayFor(model => model.User.UserName)
+                                Author: @Html.DisplayFor(model => model.Post.User.UserName)
                             </small>
                         </div>
                         <div class="row">
                             <small class="text-muted">
-                                Created: @Html.DisplayFor(model => model.CreatedDate)
+                                Created: @Html.DisplayFor(model => model.Post.CreatedDate)
                             </small>
                         </div>
                         <div class="row">
                             <small class="text-muted">
-                                Last Updated: @Html.DisplayFor(model => model.UpdatedDate)
+                                Last Updated: @Html.DisplayFor(model => model.Post.UpdatedDate)
                             </small>
                         </div>
                     </div>
                     <div class="col">
-                        @if (@Model.User.UserName == User.Identity.Name)
+                        @if (@Model.Post.User.UserName == User.Identity.Name)
                         {
                             <a asp-action="Edit" asp-route-id="@Model?.PostId">Edit</a>
                         }
@@ -44,7 +44,7 @@
                     
                         
                     <hr />
-                    <p class="card-text">@Html.DisplayFor(model => model.Body)</p>
+                    <p class="card-text">@Html.DisplayFor(model => model.Post.Body)</p>
                 </div>
             </div>
 
@@ -58,15 +58,15 @@
                             <form asp-controller="Comments" asp-action="Create">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <div class="form-group">
-                                    <input asp-for="Title" class="form-control" placeholder="Interesting title..." />
-                                    <span asp-validation-for="Title" class="text-danger"></span>
+                                    <input asp-for="@Model.Comment.Title" class="form-control" placeholder="Interesting title..." />
+                                    <span asp-validation-for="@Model.Comment.Title" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
-                                    <input asp-for="Body" class="form-control" placeholder="Your comment..." />
-                                    <span asp-validation-for="Body" class="text-danger"></span>
+                                    <textarea class="form-control" asp-for="@Model.Comment.Body" rows="3" placeholder="Your comment..."></textarea>
+                                    <span asp-validation-for="@Model.Comment.Body" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
-                                    <input type="hidden" asp-for="PostId" />
+                                    <input type="hidden" asp-for="@Model.Comment.PostId" />
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="Create" class="btn btn-primary" />
@@ -77,7 +77,7 @@
                 </div>
             </div>
 
-            @foreach(var comment in Model.Comments)
+            @foreach(var comment in Model.Post.Comments)
             {
                 <div class="card mb-3" >
                     <div class="row g-0">

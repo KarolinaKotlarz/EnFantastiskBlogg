@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using EnFantastiskBlogg.Data;
 using EnFantastiskBlogg.Models;
 using Microsoft.AspNetCore.Identity;
+using EnFantastiskBlogg.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EnFantastiskBlogg.Controllers
 {
@@ -60,8 +62,9 @@ namespace EnFantastiskBlogg.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CommentId,PostId,Title,Body,CreatedDate,UserId")] Comment comment)
+        public async Task<IActionResult> Create(CreateCommentViewModel comment)
         {
             if (true)
             {
@@ -74,6 +77,11 @@ namespace EnFantastiskBlogg.Controllers
                 }
 
                 var post = await _context.Posts.FirstOrDefaultAsync(x => x.PostId == comment.PostId);
+
+                if(post == null)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
 
                 Comment c = new Comment
                 {
@@ -90,6 +98,7 @@ namespace EnFantastiskBlogg.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Details", "Posts", new { id = c.Post.PostId });
             }
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Comments/Edit/5

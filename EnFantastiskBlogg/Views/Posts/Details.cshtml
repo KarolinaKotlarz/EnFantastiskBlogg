@@ -57,11 +57,11 @@
 
                             <form asp-controller="Comments" asp-action="Create">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <div class="form-group">
+                                <div class="form-group" style="margin-bottom: 1em">
                                     <input asp-for="@Model.Comment.Title" class="form-control" placeholder="Interesting title..." />
                                     <span asp-validation-for="@Model.Comment.Title" class="text-danger"></span>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" style="margin-bottom: 1em">
                                     <textarea class="form-control" asp-for="@Model.Comment.Body" rows="3" placeholder="Your comment..."></textarea>
                                     <span asp-validation-for="@Model.Comment.Body" class="text-danger"></span>
                                 </div>
